@@ -17,4 +17,21 @@ impl Debug for Block {
     }
 }
 
-impl Block {}
+impl Block {
+    pub fn new(
+        index: u32,
+        timestamp: u128,
+        prev_block_hash: BlockHash,
+        nonce: u64,
+        payload: String,
+    ) -> Self {
+        Block {
+            index,
+            timestamp,
+            hash: vec![0; 32],
+            prev_block_hash,
+            nonce,
+            payload,
+        }
+    }
+}
