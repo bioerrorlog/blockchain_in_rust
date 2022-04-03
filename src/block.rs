@@ -15,8 +15,11 @@ impl Debug for Block {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "Block[{}]: {:?} at: {} with: {}",
-            &self.index, &self.hash, &self.timestamp, &self.payload,
+            "Block[{}]: {} at: {} with: {}",
+            &self.index,
+            &hex::encode(&self.hash),
+            &self.timestamp,
+            &self.payload,
         )
     }
 }
