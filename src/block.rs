@@ -1,6 +1,8 @@
 use std::fmt::{self, Debug, Formatter};
 
+use crate::hashable::Hashable;
 use crate::BlockHash;
+use crate::{u32_bytes, u64_bytes, u128_bytes};
 
 pub struct Block {
     pub index: u32,
@@ -40,5 +42,12 @@ impl Block {
             nonce,
             payload,
         }
+    }
+}
+
+impl Hashable for Block {
+    fn bytes (&self) -> Vec<u8> {
+        let mut bytes = vec![];
+        bytes.extend(&)
     }
 }
