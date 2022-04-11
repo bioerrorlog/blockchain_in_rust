@@ -57,3 +57,20 @@ impl Hashable for Block {
         bytes
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_block_bytes() {
+        let block = Block::new(0, 0, vec![0; 32], 0, "This is genesis block".to_owned());
+        let expected_bytes = vec![
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 84, 104, 105, 115, 32, 105, 115, 32, 103, 101, 110, 101, 115, 105, 115, 32, 98,
+            108, 111, 99, 107,
+        ];
+        assert_eq!(block.bytes(), expected_bytes);
+    }
+}
