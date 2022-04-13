@@ -1,6 +1,7 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
 pub mod block;
+pub mod blockchain;
 pub mod hashable;
 
 type BlockHash = Vec<u8>;

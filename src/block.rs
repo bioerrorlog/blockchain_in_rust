@@ -4,6 +4,7 @@ use crate::hashable::Hashable;
 use crate::BlockHash;
 use crate::{u128_bytes, u32_bytes, u64_bytes};
 
+#[derive(PartialEq)]
 pub struct Block {
     pub index: u32,
     pub timestamp: u128,
