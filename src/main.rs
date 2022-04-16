@@ -18,4 +18,8 @@ fn main() {
     chain
         .add_block(payload)
         .expect("Failed to add my third block");
+
+    for i in &chain.blocks {
+        println!("{:?}", i);
+    }
 }
