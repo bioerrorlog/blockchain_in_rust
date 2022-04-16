@@ -18,7 +18,9 @@ pub struct BlockChain {
 
 impl BlockChain {
     pub fn new() -> Self {
-        BlockChain { blocks: vec![] }
+        BlockChain {
+            blocks: vec![Block::genesis()],
+        }
     }
 
     //  pub fn add_block(&mut self, payload: String) -> Result<(), BlockValidationErr> {
@@ -38,8 +40,8 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_initial_chain() {
+    fn genesis() {
         let chain = BlockChain::new();
-        assert_eq!(chain.blocks.last(), None);
+        assert_eq!(chain.blocks.len(), 1);
     }
 }
