@@ -1,4 +1,4 @@
-use crate::{block::Block, now};
+use crate::block::Block;
 
 #[derive(Debug)]
 pub enum BlockValidationErr {
@@ -14,25 +14,28 @@ pub enum BlockValidationErr {
 
 pub struct BlockChain {
     pub blocks: Vec<Block>,
+    pub difficulty: u128,
 }
 
 impl BlockChain {
-    pub fn new() -> Self {
+    pub fn new(difficulty: u128) -> Self {
         BlockChain {
             blocks: vec![Block::genesis()],
+            difficulty,
         }
     }
 
-    //  pub fn add_block(&mut self, payload: String) -> Result<(), BlockValidationErr> {
-    //      let mut block = Block::new(
-    //          self.blocks.len() as u32,
-    //          now(),  // will be updated
-    //          self.blocks.last().unwrap().hash,
-    //          "This is genesis block".to_owned(),
-    //      );
+    pub fn add_block(&mut self, payload: String) -> Result<(), String> {
+        let new_block = Block::mine(
+            self.blocks.len() as u32,
+            self.blocks.last().unwrap().hash.clone(),
+            payload,
+            self.difficulty,
+        );
+        self.blocks.push(new_block.unwrap());
 
-    //      Ok(())
-    //  }
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -40,8 +43,16 @@ mod test {
     use super::*;
 
     #[test]
-    fn genesis() {
-        let chain = BlockChain::new();
+    fn genesis_chain() {
+        let chain = BlockChain::new(0x000fffffffffffffffffffffffffffff);
         assert_eq!(chain.blocks.len(), 1);
+    }
+
+    #[test]
+    fn add_block_to_chain() {
+        let mut chain = BlockChain::new(0x000fffffffffffffffffffffffffffff);
+        let payload = String::from("This is second block.");
+        assert_eq!(chain.add_block(payload), Ok(()));
+        assert_eq!(chain.blocks.len(), 2);
     }
 }

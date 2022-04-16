@@ -58,6 +58,7 @@ impl Block {
         for nonce_attempt in 0..(u64::max_value()) {
             new_block.nonce = nonce_attempt;
             let hash = new_block.hash();
+            println!("{:?}, {:?}", nonce_attempt, hash);
             if check_difficulty(&hash, difficulty) {
                 new_block.nonce = nonce_attempt;
                 new_block.hash = hash;
