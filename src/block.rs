@@ -36,7 +36,7 @@ impl Block {
             hash: vec![0; 32],
             prev_block_hash: vec![0; 32],
             nonce: 0,
-            payload: "This is genesis block".to_owned(),
+            payload: "This is the genesis block".to_owned(),
         }
     }
 
