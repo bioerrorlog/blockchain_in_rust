@@ -38,7 +38,7 @@ mod test {
 
     #[test]
     fn add_block_to_chain() {
-        let mut chain = BlockChain::new(0x000fffffffffffffffffffffffffffff);
+        let mut chain = BlockChain::new(0x00000fffffffffffffffffffffffffff);
         let payload = String::from("This is second block.");
         assert_eq!(chain.add_block(payload), Ok(()));
         assert_eq!(chain.blocks.len(), 2);
