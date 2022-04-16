@@ -1,17 +1,5 @@
 use crate::block::Block;
 
-#[derive(Debug)]
-pub enum BlockValidationErr {
-    MismatchedIndex,
-    InvalidHash,
-    AchronologicalTimestamp,
-    MismatchedPreviousHash,
-    InvalidGenesisBlockFormat,
-    InvalidInput,
-    InsufficientInputValue,
-    InvalidCoinbaseTransaction,
-}
-
 pub struct BlockChain {
     pub blocks: Vec<Block>,
     pub difficulty: u128,
