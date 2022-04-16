@@ -1,4 +1,5 @@
 use crate::block::Block;
+use crate::hashable::Hashable;
 
 pub struct BlockChain {
     pub blocks: Vec<Block>,
@@ -23,6 +24,20 @@ impl BlockChain {
         self.blocks.push(new_block.unwrap());
 
         Ok(())
+    }
+
+    pub fn is_valid(&self) -> bool {
+        for i in 1..self.blocks.len() {
+            let current_block = &self.blocks[i];
+            let prev_block = &self.blocks[i - 1];
+
+            if current_block.prev_block_hash != prev_block.hash()
+                || current_block.hash != current_block.hash()
+            {
+                return false;
+            }
+        }
+        true
     }
 }
 

@@ -23,4 +23,6 @@ fn main() {
     for i in &chain.blocks {
         println!("{:?}", i);
     }
+
+    println!("\nIs this chain valid?: {}", chain.is_valid());
 }
