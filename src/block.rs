@@ -3,7 +3,7 @@ use std::fmt::{self, Debug, Formatter};
 use crate::hashable::Hashable;
 use crate::now;
 use crate::BlockHash;
-use crate::{u128_bytes, u32_bytes, u64_bytes};
+use crate::{difficulty_bytes_as_u128, u128_bytes, u32_bytes, u64_bytes};
 
 #[derive(PartialEq)]
 pub struct Block {
@@ -39,6 +39,36 @@ impl Block {
             payload: "This is genesis block".to_owned(),
         }
     }
+
+    pub fn mine(
+        index: u32,
+        prev_block_hash: BlockHash,
+        payload: String,
+        difficulty: u128,
+    ) -> Result<Self, String> {
+        let mut new_block = Block {
+            index,
+            timestamp: now(),
+            hash: vec![0; 32],
+            prev_block_hash,
+            nonce: 0,
+            payload,
+        };
+
+        for nonce_attempt in 0..(u64::max_value()) {
+            new_block.nonce = nonce_attempt;
+            let hash = new_block.hash();
+            if check_difficulty(&hash, difficulty) {
+                new_block.nonce = nonce_attempt;
+                new_block.hash = hash;
+                return Ok(new_block);
+            }
+        }
+
+        Err(String::from(
+            "mining failed: all nonce attempt was invalid.",
+        ))
+    }
 }
 
 impl Hashable for Block {
@@ -54,29 +84,6 @@ impl Hashable for Block {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     use super::*;
-//
-//     #[test]
-//     fn test_block_bytes() {
-//         let block = Block::genesis();
-//         let expected = vec![
-//             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//             0, 0, 84, 104, 105, 115, 32, 105, 115, 32, 103, 101, 110, 101, 115, 105, 115, 32, 98,
-//             108, 111, 99, 107,
-//         ];
-//         assert_eq!(block.bytes(), expected);
-//     }
-//
-//     #[test]
-//     fn test_block_hash() {
-//         let block = Block::genesis();
-//         let expected = vec![
-//             140, 99, 185, 114, 219, 137, 11, 38, 45, 162, 129, 48, 140, 17, 1, 179, 232, 236, 93,
-//             5, 19, 109, 72, 161, 154, 24, 215, 174, 65, 240, 163, 115,
-//         ];
-//         assert_eq!(block.hash(), expected);
-//     }
-// }
+pub fn check_difficulty(hash: &BlockHash, difficulty: u128) -> bool {
+    difficulty > difficulty_bytes_as_u128(&hash)
+}
