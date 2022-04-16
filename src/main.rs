@@ -1,11 +1,15 @@
-use rustchain::block::Block;
 use rustchain::blockchain::BlockChain;
 
 fn main() {
-    let block = Block::genesis();
-    println!("{:?}", &block);
+    let mut chain = BlockChain::new(0x0000ffffffffffffffffffffffffffff);
 
-    let mut chain = BlockChain::new(0x00000fffffffffffffffffffffffffff);
-    let payload = String::from("This is second block.");
-    chain.add_block(payload)
+    let payload = String::from("This is my first block.");
+    chain
+        .add_block(payload)
+        .expect("Failed to add my first block");
+
+    let payload = String::from("This is my second block.");
+    chain
+        .add_block(payload)
+        .expect("Failed to add my first block");
 }
