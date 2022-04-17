@@ -70,17 +70,14 @@ impl Block {
         ))
     }
 
-    pub fn genesis() -> Self {
-        let mut genesis_block = Block::new(
+    pub fn genesis(difficulty: u128) -> Self {
+        Block::mine(
             0,
             vec![0; 32],
-            vec![0; 32],
-            0,
-            "This is the genesis block".to_owned(),
-        );
-        genesis_block.hash = genesis_block.hash();
-
-        genesis_block
+            String::from("This is the genesis block"),
+            difficulty,
+        )
+        .unwrap()
     }
 }
 

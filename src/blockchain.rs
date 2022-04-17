@@ -9,7 +9,7 @@ pub struct BlockChain {
 impl BlockChain {
     pub fn new(difficulty: u128) -> Self {
         BlockChain {
-            blocks: vec![Block::genesis()],
+            blocks: vec![Block::genesis(difficulty)],
             difficulty,
         }
     }
