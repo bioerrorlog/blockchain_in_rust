@@ -1,4 +1,5 @@
 use rustchain::blockchain::BlockChain;
+use rustchain::hashable::Hashable;
 
 fn main() {
     let difficulty = 0x0000ffffffffffffffffffffffffffff;
@@ -23,6 +24,4 @@ fn main() {
     for i in &chain.blocks {
         println!("{:?}", i);
     }
-
-    println!("\nIs this chain valid?: {}", chain.is_valid());
 }

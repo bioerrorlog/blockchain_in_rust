@@ -37,6 +37,7 @@ impl BlockChain {
                 return false;
             }
         }
+
         true
     }
 }
