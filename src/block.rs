@@ -29,14 +29,20 @@ impl Debug for Block {
 }
 
 impl Block {
-    pub fn genesis() -> Self {
+    pub fn new(
+        index: u32,
+        hash: BlockHash,
+        prev_block_hash: BlockHash,
+        nonce: u64,
+        payload: String,
+    ) -> Self {
         Block {
-            index: 0,
+            index,
             timestamp: now(),
-            hash: vec![0; 32],
-            prev_block_hash: vec![0; 32],
-            nonce: 0,
-            payload: "This is the genesis block".to_owned(),
+            hash,
+            prev_block_hash,
+            nonce,
+            payload,
         }
     }
 
@@ -46,14 +52,7 @@ impl Block {
         payload: String,
         difficulty: u128,
     ) -> Result<Self, String> {
-        let mut new_block = Block {
-            index,
-            timestamp: now(),
-            hash: vec![0; 32],
-            prev_block_hash,
-            nonce: 0,
-            payload,
-        };
+        let mut new_block = Block::new(index, vec![0; 32], prev_block_hash, 0, payload);
 
         for nonce_attempt in 0..(u64::max_value()) {
             new_block.nonce = nonce_attempt;
@@ -69,6 +68,19 @@ impl Block {
         Err(String::from(
             "mining failed: all nonce attempt was invalid.",
         ))
+    }
+
+    pub fn genesis() -> Self {
+        let mut genesis_block = Block::new(
+            0,
+            vec![0; 32],
+            vec![0; 32],
+            0,
+            "This is the genesis block".to_owned(),
+        );
+        genesis_block.hash = genesis_block.hash();
+
+        genesis_block
     }
 }
 
