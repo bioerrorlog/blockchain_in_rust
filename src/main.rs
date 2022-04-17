@@ -1,5 +1,4 @@
 use rustchain::blockchain::BlockChain;
-use rustchain::hashable::Hashable;
 
 fn main() {
     let difficulty = 0x0000ffffffffffffffffffffffffffff;
