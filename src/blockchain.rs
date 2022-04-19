@@ -50,6 +50,7 @@ mod test {
     fn genesis_chain() {
         let chain = BlockChain::new(0x000fffffffffffffffffffffffffffff);
         assert_eq!(chain.blocks.len(), 1);
+        assert!(chain.is_valid());
     }
 
     #[test]
@@ -58,5 +59,6 @@ mod test {
         let payload = String::from("This is second block.");
         assert_eq!(chain.add_block(payload), Ok(()));
         assert_eq!(chain.blocks.len(), 2);
+        assert!(chain.is_valid());
     }
 }
