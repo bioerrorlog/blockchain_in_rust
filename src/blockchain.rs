@@ -61,4 +61,17 @@ mod test {
         assert_eq!(chain.blocks.len(), 2);
         assert!(chain.is_valid());
     }
+
+    #[test]
+    fn invali_chain_is_invalid() {
+        let mut chain = BlockChain::new(0x000fffffffffffffffffffffffffffff);
+        chain.blocks.push(Block::new(
+            0,
+            vec![0; 32],
+            vec![0; 32],
+            0,
+            String::from("this is invalid"),
+        ));
+        assert!(!chain.is_valid());
+    }
 }
