@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+
 use std::time::{SystemTime, UNIX_EPOCH};
 
 pub mod block;
