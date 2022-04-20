@@ -63,7 +63,7 @@ mod test {
     }
 
     #[test]
-    fn invali_chain_is_invalid() {
+    fn invalid_chain_is_invalid() {
         let mut chain = BlockChain::new(0x000fffffffffffffffffffffffffffff);
         chain.blocks.push(Block::new(
             0,
