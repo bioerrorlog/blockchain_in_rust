@@ -75,3 +75,14 @@ pub fn difficulty_bytes_as_u128(v: &Vec<u8>) -> u128 {
         | ((v[17] as u128) << 0x1 * 8)
         | ((v[16] as u128) << 0x0 * 8)
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_u32_bytes() {
+        let input = u32::MAX;
+        assert_eq!(u32_bytes(&input), [255, 255, 255, 255]);
+    }
+}
