@@ -83,6 +83,18 @@ mod test {
     #[test]
     fn test_u32_bytes() {
         let input = u32::MAX;
-        assert_eq!(u32_bytes(&input), [255, 255, 255, 255]);
+        assert_eq!(u32_bytes(&input), [255; 4]);
+    }
+
+    #[test]
+    fn test_u64_bytes() {
+        let input = u64::MAX;
+        assert_eq!(u64_bytes(&input), [255; 8]);
+    }
+
+    #[test]
+    fn test_u128_bytes() {
+        let input = u128::MAX;
+        assert_eq!(u128_bytes(&input), [255; 16]);
     }
 }
